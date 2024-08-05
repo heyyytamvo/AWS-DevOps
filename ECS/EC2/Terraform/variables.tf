@@ -71,3 +71,9 @@ variable "ec2_ami" {
 #   type        = string
 #   default = "password" 
 # }
+
+variable "ecs_cluster_name" {
+  description = "Name for ECS Cluster"
+  type        = string
+  default = "My ECS Cluster" // AMZ Linux 2 by default
+}

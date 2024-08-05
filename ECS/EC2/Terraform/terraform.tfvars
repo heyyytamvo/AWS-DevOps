@@ -23,3 +23,5 @@ ec2_key_name = "EC2"
 ec2_ami = "ami-0a0e5d9c7acc336f1"  // Ubuntu
 
 # rds_db_pass = "passwordispassword"
+
+ecs_cluster_name = "My ECS Cluster"
