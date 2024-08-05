@@ -75,5 +75,29 @@ variable "ec2_ami" {
 variable "ecs_cluster_name" {
   description = "Name for ECS Cluster"
   type        = string
-  default = "My ECS Cluster" // AMZ Linux 2 by default
+  default = "My ECS Cluster" 
+}
+
+variable "image_name" {
+  description = "Name for docker image"
+  type        = string
+  default = "" // None by default
+}
+
+variable "service_name" {
+  description = "Name for Service"
+  type        = string
+  default = "Default_Service_Name" // None by default
+}
+
+variable "container_port" {
+  description = "Exposed port on container"
+  type        = number
+  default = 3000// 3000 by default
+}
+
+variable "ecs_task_desired_count" {
+  description = "Desired Task Count"
+  type        = number
+  default = 2 // 2 by default
 }

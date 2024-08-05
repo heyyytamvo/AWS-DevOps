@@ -1,44 +1,106 @@
-# resource "aws_iam_role_policy" "fullaccess_s3_policy" {
-#   name = "full_access_s3"
-#   role = aws_iam_role.ec2_role.name
+## Creates IAM Role which is assumed by the Container Instances (aka EC2 Instances)
 
-#   policy = <<POLICY
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Action": "s3:*",
-#       "Resource": [
-#         "${aws_s3_bucket.s3bucket.arn}",
-#         "${aws_s3_bucket.s3bucket.arn}/*"
-#       ]
-#     }
-#   ]
-# }
-# POLICY
-# }
+resource "aws_iam_role" "ec2_instance_role" {
+  name               = "EC2InstanceRole"
+  assume_role_policy = data.aws_iam_policy_document.ec2_instance_role_policy.json
+}
 
-# resource "aws_iam_role" "ec2_role" {
-#   name = "ec2_role"
+resource "aws_iam_role_policy_attachment" "ec2_instance_role_policy" {
+  role       = aws_iam_role.ec2_instance_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
 
-#   assume_role_policy = <<POLICY
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": {
-#         "Service": "ec2.amazonaws.com"
-#       },
-#       "Action": "sts:AssumeRole"
-#     }
-#   ]
-# }
-# POLICY
-# }
+resource "aws_iam_instance_profile" "ec2_instance_role_profile" {
+  name  = "EC2_InstanceRoleProfile"
+  role  = aws_iam_role.ec2_instance_role.id
+}
 
-# resource "aws_iam_instance_profile" "ec2_profile"{
-#     name = "album_instance_profile"
-#     role = aws_iam_role.ec2_role.name
-# }
+data "aws_iam_policy_document" "ec2_instance_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = [
+        "ec2.amazonaws.com",
+        "ecs.amazonaws.com"
+      ]
+    }
+  }
+}
+
+## IAM Role for ECS Task execution
+
+resource "aws_iam_role" "ecs_task_execution_role" {
+  name               = "ECS_TaskExecutionRole"
+  assume_role_policy = data.aws_iam_policy_document.task_assume_role_policy.json
+}
+
+data "aws_iam_policy_document" "task_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_iam_role" "ecs_task_iam_role" {
+  name               = "ECS_TaskIAMRole"
+  assume_role_policy = data.aws_iam_policy_document.task_assume_role_policy.json
+}
+
+## Create service-linked role used by the ECS Service to manage the ECS Cluster
+
+resource "aws_iam_role" "ecs_service_role" {
+  name               = "ECS_ServiceRole"
+  assume_role_policy = data.aws_iam_policy_document.ecs_service_policy.json
+}
+
+data "aws_iam_policy_document" "ecs_service_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs.amazonaws.com",]
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "ecs_service_role_policy" {
+  name   = "ECS_ServiceRolePolicy"
+  policy = data.aws_iam_policy_document.ecs_service_role_policy.json
+  role   = aws_iam_role.ecs_service_role.id
+}
+
+data "aws_iam_policy_document" "ecs_service_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = [
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:Describe*",
+      "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+      "elasticloadbalancing:DeregisterTargets",
+      "elasticloadbalancing:Describe*",
+      "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+      "elasticloadbalancing:RegisterTargets",
+      "ec2:DescribeTags",
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:DescribeLogStreams",
+      "logs:PutSubscriptionFilter",
+      "logs:PutLogEvents"
+    ]
+    resources = ["*"]
+  }
+}

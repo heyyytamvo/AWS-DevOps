@@ -24,4 +24,8 @@ ec2_ami = "ami-0a0e5d9c7acc336f1"  // Ubuntu
 
 # rds_db_pass = "passwordispassword"
 
-ecs_cluster_name = "My ECS Cluster"
+ecs_cluster_name = "ECSCluster"
+
+image_name = "heyyytamvo/mexer-frontend"
+
+service_name = "Front_End_Service"

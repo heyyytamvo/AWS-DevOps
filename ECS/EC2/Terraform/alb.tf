@@ -49,3 +49,58 @@ resource "aws_alb" "albtest" {
     Environment = "production"
   }
 }
+
+resource "aws_alb_listener" "alb_listener_http" {
+  load_balancer_arn = aws_alb.albtest.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "Access denied"
+      status_code  = "403"
+    }
+  }
+}
+
+## Target Group for our service
+
+resource "aws_alb_target_group" "service_target_group" {
+  name                 = "TargetGroupForService"
+  port                 = "80"
+  protocol             = "HTTP"
+  vpc_id               = aws_vpc.main.id
+  deregistration_delay = 120
+
+  health_check {
+    healthy_threshold   = "2"
+    unhealthy_threshold = "2"
+    interval            = "60"
+    # matcher             = var.healthcheck_matcher
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = "30"
+  }
+  
+  depends_on = [aws_alb.albtest]
+}
+
+
+resource "aws_alb_listener_rule" "alb_listener_http" {
+  listener_arn = aws_alb_listener.alb_listener_http.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_alb_target_group.service_target_group.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/*"]
+    }
+  }
+}
