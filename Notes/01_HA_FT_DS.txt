@@ -1,0 +1,13 @@
++ High Availability
+
+If the system failed and there is a component can be replaced in a certain amount of time => High Availability
+
+How many hours per year that the system will shut down?
+
++ Fault Tolerance
+
+How well the system will continue operating properly in the event of failure of some components	
+
++ Disaster Recovery
+
+
