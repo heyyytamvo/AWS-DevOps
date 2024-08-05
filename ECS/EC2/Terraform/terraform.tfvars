@@ -14,7 +14,7 @@ ec2_name = "Bastion Instance EC2"
 
 ec2_instance_type = "t2.medium"
 
-ec2_key_name = "test"
+ec2_key_name = "EC2"
 
 # ec2_database_name = "wp_test"
 

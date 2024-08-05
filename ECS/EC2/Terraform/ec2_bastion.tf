@@ -2,7 +2,7 @@
 resource "aws_security_group" "Bastion_SG" {
   name        = "Bastion_SG"
   description = "Allow HTTP inbound and all outbound traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   ingress = [
   {
@@ -55,14 +55,12 @@ resource "aws_security_group" "Bastion_SG" {
 }
 
 resource "aws_instance" "bastion_host" {
-  
 
-   
-    ami = var.ec2_ami
+    ami                    = var.ec2_ami
     instance_type          = var.ec2_instance_type
-    # key_name               = var.ec2_key_name
+    key_name               = aws_key_pair.EC2key.key_name
     monitoring             = true
-    subnet_id              = module.vpc.public_subnets[0]
+    subnet_id              = aws_subnet.public_subnet_2.id
     vpc_security_group_ids = [aws_security_group.Bastion_SG.id]
     associate_public_ip_address = true
     # iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
@@ -79,6 +77,6 @@ resource "aws_instance" "bastion_host" {
     tags = {
         Terraform   = "true"
         Environment = "dev"
-        Name = var.ec2_name
+        Name        = var.ec2_name
     }
 }

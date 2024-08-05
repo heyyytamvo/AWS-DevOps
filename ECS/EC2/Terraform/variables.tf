@@ -8,7 +8,7 @@ variable "vpc_name" {
 variable "vpc_cidr" {
   description = "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overriden"
   type        = string
-  default     = "0.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "vpc_azs" {
@@ -45,7 +45,7 @@ variable "ec2_instance_type" {
 variable "ec2_key_name" {
   description = "Name of the key pair to use for the EC2 instance"
   type        = string
-  default = "MyFirstInstance"
+  default = "EC2"
 }
 
 # variable "ec2_database_name" {

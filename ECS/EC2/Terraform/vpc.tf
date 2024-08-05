@@ -1,29 +1,34 @@
-
-module "vpc" {
-  source                       = "terraform-aws-modules/vpc/aws"
-  version = "5.8.1"
-  
-  name                         = var.vpc_name
-  cidr                         = var.vpc_cidr
-  
-  azs                          = var.vpc_azs
-  private_subnets              = var.vpc_private_subnets
-  public_subnets               = var.vpc_public_subnets
-
-
+resource "aws_vpc" "main" {
+  cidr_block                   = var.vpc_cidr
   enable_dns_hostnames         = true
   enable_dns_support           = true
-  enable_nat_gateway           = true
-  single_nat_gateway           = true
-  
+  tags = {
+    Name = var.vpc_name
+  }
 }
 
-# ## Create Internet Gateway for egress/ingress connections to resources in the public subnets
+resource "aws_internet_gateway" "defaultIGW" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name     = "Default InternetGateway"
+  }
+}
 
-# resource "aws_internet_gateway" "defaultIGW" {
-#   vpc_id = module.vpc..id
+# Elastic IP for NAT Gateway
+resource "aws_eip" "my_elastic_ip" {
+  domain   = "vpc"
+}
 
-#   tags = {
-#     Name     = "Default InternetGateway"
-#   }
-# }
+# NAT Gateway
+resource "aws_nat_gateway" "my_nat_gtw" {
+  allocation_id = aws_eip.my_elastic_ip.id
+  subnet_id     = aws_subnet.public_subnet_1.id
+
+  tags = {
+    Name = "NAT Gateway"
+  }
+
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.defaultIGW]
+}

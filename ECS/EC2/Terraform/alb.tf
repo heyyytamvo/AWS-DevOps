@@ -2,7 +2,7 @@
 resource "aws_security_group" "ALB_SG" {
   name        = "ALB SG"
   description = "Allow HTTP inbound and all outbound traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = aws_vpc.main.id
 
   ingress = [
   {
@@ -35,7 +35,7 @@ resource "aws_alb" "albtest" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ALB_SG.id]
-  subnets            = module.vpc.public_subnets
+  subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
 
   enable_deletion_protection = false
 

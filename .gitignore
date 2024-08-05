@@ -9,3 +9,4 @@ GeneralAccount
 ProductionAccount
 Progress.txt
 *.pem
+*.pub
