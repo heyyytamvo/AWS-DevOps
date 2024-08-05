@@ -23,8 +23,8 @@ resource "aws_ecs_task_definition" "my_ECS_TD" {
     {
       name         = var.service_name
       image        = var.image_name
-      cpu          = 100
-      memory       = 100
+      cpu          = 1000
+      memory       = 1000
       essential    = true
       portMappings = [
         {
@@ -66,7 +66,7 @@ resource "aws_ecs_service" "service" {
     field = "memory"
   }
 
-  ## Do not update desired count again to avoid a reset to this number on every deployment
+  ## Do not update desired count again to avoid a reset to this number on every deploymengit t
   lifecycle {
     ignore_changes = [desired_count]
   }

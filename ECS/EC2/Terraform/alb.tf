@@ -80,7 +80,7 @@ resource "aws_alb_target_group" "service_target_group" {
     unhealthy_threshold = "2"
     interval            = "60"
     # matcher             = var.healthcheck_matcher
-    path                = "/"
+    path                = "/login"
     port                = "traffic-port"
     protocol            = "HTTP"
     timeout             = "30"
