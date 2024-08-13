@@ -64,16 +64,14 @@ resource "aws_instance" "bastion_host" {
     vpc_security_group_ids = [aws_security_group.Bastion_SG.id]
     associate_public_ip_address = true
     # iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
-#     user_data = <<EOF
-# #!/bin/bash
-# sudo apt update -y
-# sudo apt install -y software-properties-common
-# sudo add-apt-repository ppa:ondrej/php
-# sudo apt update -y
-# sudo apt install -y php7.2 php7.2-common php7.2-cli php7.2-fpm
-# sudo apt install -y php7.2-{mysql,curl,json,xsl,gd,xml,zip,xsl,soap,bcmath,mbstring,gettext,imagick}
-# sudo apt install -y apache2
-# EOF
+    user_data = <<EOF
+#!/bin/bash
+sudo apt update -y
+
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update -y
+sudo apt install -y apache2-utils
+EOF
     tags = {
         Terraform   = "true"
         Environment = "dev"
