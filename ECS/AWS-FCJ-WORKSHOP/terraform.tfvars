@@ -1,4 +1,4 @@
-vpc_name = "my-VPC"
+vpc_name = "Work Shop 1"
 
 vpc_cidr = "10.0.0.0/16"
 

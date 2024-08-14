@@ -1,9 +1,10 @@
-## Creates an ASG linked with our main VPC
+# Creates an ASG linked with our main VPC
 
 resource "aws_autoscaling_group" "ecs_autoscaling_group" {
   name                  = "ECS_ASG"
   max_size              = 4
   min_size              = 2
+  desired_capacity      = 2
   vpc_zone_identifier   = [aws_subnet.private_subnet_1.id, aws_subnet.private_subnet_2.id]
   health_check_type     = "EC2"
   protect_from_scale_in = true
