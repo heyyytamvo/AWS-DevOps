@@ -10,7 +10,7 @@ resource "aws_vpc" "main" {
 resource "aws_internet_gateway" "defaultIGW" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name     = "Default InternetGateway"
+    Name     = "Workshop 1 Internet Gateway"
   }
 }
 

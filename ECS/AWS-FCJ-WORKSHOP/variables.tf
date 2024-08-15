@@ -74,6 +74,12 @@ variable "service_name" {
   default = "Default_Service_Name" // None by default
 }
 
+variable "container_name" {
+  description = "Name of container"
+  type        = string
+  default = ""// None by default
+}
+
 variable "container_port" {
   description = "Exposed port on container"
   type        = number

@@ -5,11 +5,23 @@ resource "aws_security_group" "ECS_EC2_SG"{
 
   ingress = [
   {
-    from_port        = 1024
+    from_port        = 49153
     to_port          = 65535
     protocol         = "tcp"
     cidr_blocks      = []
-    description      = "Allow all traffic from ALB"
+    description      = "Allow all traffic coming from port 49153-65535 from ALB"
+    ipv6_cidr_blocks = []
+    prefix_list_ids   = []
+    security_groups   = [aws_security_group.ALB_SG.id]
+    self             = false
+  },
+
+  {
+    from_port        = 32768
+    to_port          = 61000
+    protocol         = "tcp"
+    cidr_blocks      = []
+    description      = "Allow all traffic coming from port 32768-61000 from ALB"
     ipv6_cidr_blocks = []
     prefix_list_ids   = []
     security_groups   = [aws_security_group.ALB_SG.id]
@@ -37,7 +49,7 @@ resource "aws_security_group" "ECS_EC2_SG"{
   }
 
   tags = {
-    Name = "Bastion SG"
+    Name = "ECS EC2 SG"
   }
 }
 

@@ -1,4 +1,4 @@
-# Security Group for EC2
+# Security Group for EC2 Bastion
 resource "aws_security_group" "Bastion_SG" {
   name        = "Bastion_SG"
   description = "Allow HTTP inbound and all outbound traffic"
@@ -54,6 +54,7 @@ resource "aws_security_group" "Bastion_SG" {
   }
 }
 
+# Bastion Host
 resource "aws_instance" "bastion_host" {
 
     ami                    = var.ec2_ami
@@ -63,7 +64,6 @@ resource "aws_instance" "bastion_host" {
     subnet_id              = aws_subnet.public_subnet_2.id
     vpc_security_group_ids = [aws_security_group.Bastion_SG.id]
     associate_public_ip_address = true
-    # iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
     user_data = <<EOF
 #!/bin/bash
 sudo apt update -y

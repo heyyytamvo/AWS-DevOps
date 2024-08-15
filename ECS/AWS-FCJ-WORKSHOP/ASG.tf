@@ -35,3 +35,20 @@ resource "aws_autoscaling_group" "ecs_autoscaling_group" {
     propagate_at_launch = true
   }
 }
+
+// Create target tracking scaling policy using metric math
+
+resource "aws_autoscaling_policy" "asg_policy_ecs_autoscaling_group" {
+  autoscaling_group_name = aws_autoscaling_group.ecs_autoscaling_group.name
+  name                   = "Custom Policy"
+  policy_type            = "TargetTrackingScaling"
+  
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 50.0
+  }
+}
+

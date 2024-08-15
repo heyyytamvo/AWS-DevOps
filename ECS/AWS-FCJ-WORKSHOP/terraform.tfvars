@@ -19,10 +19,16 @@ ec2_key_name = "EC2"
 ec2_ami = "ami-0a0e5d9c7acc336f1"  // Ubuntu
 
 
+# ECS variables
+
 ecs_cluster_name = "ECSCluster"
+
+container_name = "VLSM FE Container"
 
 image_name = "heyyytamvo/vlsm:fe"
 
 service_name = "VLSM_FrontEnd_Service"
 
 ecs_task_desired_count = 2
+
+container_port = 3000
