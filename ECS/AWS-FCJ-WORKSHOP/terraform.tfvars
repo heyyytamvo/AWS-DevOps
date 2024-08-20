@@ -23,7 +23,7 @@ ec2_ami = "ami-0a0e5d9c7acc336f1"  // Ubuntu
 
 ecs_cluster_name = "ECSCluster"
 
-container_name = "VLSM FE Container"
+container_name = "VLSM_Container"
 
 image_name = "heyyytamvo/vlsm:fe"
 

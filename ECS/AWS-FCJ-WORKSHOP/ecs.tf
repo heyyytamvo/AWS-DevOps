@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "my_ECS_TD" {
 
 resource "aws_ecs_service" "service" {
   name                               = "ECS_Service"
-  iam_role                           = aws_iam_role.container_name.arn
+  iam_role                           = aws_iam_role.ecs_service_role.arn
   cluster                            = aws_ecs_cluster.main.id
   task_definition                     = aws_ecs_task_definition.my_ECS_TD.arn
   desired_count                      = var.ecs_task_desired_count
