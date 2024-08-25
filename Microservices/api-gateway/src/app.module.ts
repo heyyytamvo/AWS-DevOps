@@ -9,12 +9,18 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       {
         name: 'ORDER',
         transport: Transport.TCP,
-        options: { port: 3001 }
+        options: { 
+          host: '0.0.0.0',
+          port: 3001 
+        }
       },
       {
         name: 'INFO',
         transport: Transport.TCP,
-        options: { port: 3002 }
+        options: { 
+          host: '0.0.0.0',
+          port: 3002 
+        }
       },
     ])
   ],
