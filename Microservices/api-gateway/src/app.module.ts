@@ -2,29 +2,40 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ConfigModule.forRoot(),
+    ClientsModule.registerAsync([
       {
+        imports: [ConfigModule],
         name: 'ORDER',
-        transport: Transport.TCP,
-        options: { 
-          host: '0.0.0.0',
-          port: 3001 
-        }
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: `${configService.get<string>('ORDER_HOST')}`,
+            port: 3001
+          }
+        }),
+        inject: [ConfigService]
       },
+
       {
+        imports: [ConfigModule],
         name: 'INFO',
-        transport: Transport.TCP,
-        options: { 
-          host: '0.0.0.0',
-          port: 3002 
-        }
-      },
-    ])
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: `${configService.get<string>('INFO_HOST')}`,
+            port: 3002
+          }
+        }),
+        inject: [ConfigService]
+      }
+    ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ConfigService]
 })
 export class AppModule {}
