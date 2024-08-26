@@ -1,15 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { createOrderDto } from './create-order.dto';
-import { ClientProxy } from '@nestjs/microservices';
-import { createOrderEvent } from './create-order.event';
-import { lastValueFrom, map } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly httpService: HttpService,
+    private readonly configService: ConfigService
   ) {}
   getHello(): string {
     return 'Hello World!';
@@ -19,7 +18,7 @@ export class AppService {
     try {
       const requestConfig: AxiosRequestConfig = {
         method: 'post',
-        url: 'http://localhost:3001/create-order',
+        url: `http://${this.configService.get<string>('ORDER_HOST')}:3001/create-order`,
         data: orderData,
         headers: {
           'Content-Type': 'application/json'
@@ -36,7 +35,7 @@ export class AppService {
   
   async getAllOrder(): Promise<any> {
     try {
-      const response = await this.httpService.get('http://localhost:3002/get-orders').toPromise();
+      const response = await this.httpService.get(`http://${this.configService.get<string>('INFO_HOST')}:3002/get-orders`).toPromise();
       return response.data;
     } catch (error) {
       console.error('Error fetching orders:', error);
