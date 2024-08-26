@@ -1,4 +1,4 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './Entities/order.entity';
 import { Repository } from 'typeorm';
@@ -10,8 +10,8 @@ export class AppService {
     @InjectRepository(Order) private ordersRepository: Repository<Order>
   ){};
   
-  getAllOrders(){
-    return this.ordersRepository.find();
+  async getAllOrders(){
+    return await this.ordersRepository.find();
   }
 
 }

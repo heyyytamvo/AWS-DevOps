@@ -1,5 +1,5 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
-import { createOrderEvent } from './Events/create-order.event';
+import { createOrderDto } from './Dto/create-order.event';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './Entities/order.entity';
 import { Repository } from 'typeorm';
@@ -9,14 +9,14 @@ export class AppService {
 
   constructor(
     @InjectRepository(Order)
-        private ordersRepository: Repository<Order>
-  ){};
+    private ordersRepository: Repository<Order>
+  ) { };
 
   getHello(): string {
     return 'Hello World!';
   }
 
-  async handleOrder(data: createOrderEvent) {
+  async handleOrder(data: createOrderDto) {
 
     // Find order by name
     const name = data.name;

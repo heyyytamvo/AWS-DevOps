@@ -1,7 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
-import { MessagePattern } from '@nestjs/microservices';
-import { createOrderEvent } from './Events/create-order.event';
+import { createOrderDto } from './Dto/create-order.event';
 
 @Controller()
 export class AppController {
@@ -12,9 +11,9 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @MessagePattern({ cmd: 'create-order' })
-  handleOrder(data: createOrderEvent) {
-    return this.appService.handleOrder(data);
+  @Post('create-order')
+  async handleOrder(data: createOrderDto) {
+    return await this.appService.handleOrder(data);
   }
 
 }

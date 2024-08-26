@@ -6,8 +6,8 @@ import { MessagePattern } from '@nestjs/microservices';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @MessagePattern({ cmd: 'get-orders' })
-  getAllOrder() {
-    return this.appService.getAllOrders();
+  @Get('get-orders')
+  async getAllOrder() {
+    return await this.appService.getAllOrders();
   }
 }

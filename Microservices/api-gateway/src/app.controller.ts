@@ -17,7 +17,7 @@ export class AppController {
   }
 
   @Get('get-orders')
-  getAllOrder(){
-    return this.appService.getAllOrder();
+  async getAllOrder(){
+    return await this.appService.getAllOrder();
   }
 }
