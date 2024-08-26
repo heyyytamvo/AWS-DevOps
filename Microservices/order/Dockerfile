@@ -4,7 +4,7 @@ WORKDIR /home/app
 
 COPY . /home/app
 
-# RUN npm install
+
 
 ARG BUILDTIME_DB_DATABASE=default
 ARG BUILDTIME_DB_HOST=default
@@ -18,7 +18,8 @@ ENV DB_PORT=$BUILDTIME_DB_PORT
 ENV DB_USERNAME=$BUILDTIME_DB_USERNAME
 ENV DB_PASSWORD=$BUILDTIME_DB_PASSWORD
 
-EXPOSE 3001
+RUN npm install
 RUN npm run build
 
+EXPOSE 3001
 CMD ["npm", "run", "start"]
