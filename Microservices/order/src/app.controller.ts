@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { createOrderDto } from './Dto/create-order.event';
 
@@ -12,7 +12,7 @@ export class AppController {
   }
 
   @Post('create-order')
-  async handleOrder(data: createOrderDto) {
+  async handleOrder(@Body() data: createOrderDto) {
     return await this.appService.handleOrder(data);
   }
 
