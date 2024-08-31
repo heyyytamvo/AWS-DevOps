@@ -1,0 +1,34 @@
+<mxfile host="Electron" modified="2024-08-30T15:19:04.989Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="OkZeIS5ZeZFwNj2ORY-5" version="24.6.4" type="device">
+  <diagram name="Page-1" id="aVgKbe5zRCB4r9OP6mi0">
+    <mxGraphModel dx="2074" dy="1267" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l83eBaadisW8cw4yzPC_-1" value="&lt;h2&gt;&lt;b&gt;Worker Node&lt;/b&gt;&lt;/h2&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="158" y="406" width="540" height="461" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-3" value="API Gateway Pod" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="611" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-4" value="Order Pod 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="539" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-5" value="Info Pod 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="689" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-7" value="Order Pod 2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="459" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-8" value="Order Service (Cluster IP)" style="rounded=0;whiteSpace=wrap;html=1;direction=west;horizontal=1;" vertex="1" parent="1">
+          <mxGeometry x="449" y="500" width="105" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-9" value="Info Pod 1" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="773" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l83eBaadisW8cw4yzPC_-11" value="Info Service&amp;nbsp;&lt;div&gt;(Cluster IP)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;direction=west;horizontal=1;" vertex="1" parent="1">
+          <mxGeometry x="449" y="735" width="97" height="66" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

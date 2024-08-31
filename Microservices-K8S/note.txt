@@ -1,0 +1,8 @@
+export DB_HOST=sql12.freesqldatabase.com \
+export DB_PORT=3306 \
+export DB_USERNAME=sql12727256 \
+export DB_PASSWORD=Yif2zj7t2b \
+export DB_DATABASE=sql12727256
+
+
+netstat -vanp tcp | grep 3001
