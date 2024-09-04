@@ -28,10 +28,9 @@ metadata:
   labels:
     app: api-gateway-app
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: api-gateway-app
   ports:
-  - port: 3000
-    targetPort: 8080
-    nodePort: 30100
+  - port: 80
+    targetPort: 3000
